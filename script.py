@@ -3,18 +3,21 @@
 #    @_PUCHA_LEARNING_@        #
 #                              #
 ################################ 
+from time import gmtime, strftime
+from collections import Counter
+from nltk.corpus import stopwords
+from nltk import word_tokenize
+
 import pandas as pd
 import numpy as np 
 import nltk
 import string
-from collections import Counter
-from nltk.corpus import stopwords
-from nltk import word_tokenize
+import socket
 import pickle
 
-nltk.download()
 # Set Path to dataset folder 
-path = "dataset/"
+path_to_data = "dataset/"
+path_to_output = "output/"
 
 ### Training and test set 
 training_text = pd.read_csv(path + "training_text",sep = '\|\|', header = None, skiprows = 1, names = ['ID', 'Text'], engine = 'python', encoding = 'utf-8')
@@ -56,6 +59,35 @@ for index, row in training_df.iterrows():
             dict_words[class_example-1][word_occ[0]] += word_occ[1]
     print (index)
 
+## To persist the dict_words object
 pickle.dump(dict_words, open("dict_word.pickle", "wb"))
 
-####
+#Generate submission file
+test_df_rows = test_df.shape[0]
+tags = ["class1","class2","class3","class4","class5","class6","class7","class8","class9"]
+submission_data = pd.DataFrame(np.zeros((test_df_rows, len(tags))), columns = tags)
+
+# @TODO : Add a '1' in the selected classs for each row
+# 5,0,1,0,0,0,0,0,0,0 <@ID, @[class1 - class9]
+submission_data.to_csv(path_to_output + "submissionFile_" + strftime("%Y-%m-%d_%H-%M-%S", gmtime()) + "_" + socket.gethostname(),index_label="ID")
+                       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
