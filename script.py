@@ -46,7 +46,10 @@ for index, row in training_df.iterrows():
     class_example = row['Class']
 
     ### Tokenize and remove stopwords 
-    text_example_tokenize = nltk.word_tokenize(text_example)
+    if platform.system() == 'Windows':
+        text_example_tokenize = nltk.word_tokenize(text_example.decode('utf-8'))
+    else:
+        text_example_tokenize = nltk.word_tokenize(text_example)
     test = [i.lower() for i in text_example_tokenize if i.lower() not in stop and i not in punctuations and isinstance(i, int) is False]
     c = Counter(test)
     
