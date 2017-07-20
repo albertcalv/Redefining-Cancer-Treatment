@@ -10,6 +10,7 @@ import nltk
 from collections import Counter
 
 # Set Path to dataset folder 
+#viva pucha libre
 path = "dataset/"
 
 ### Training and test set 
