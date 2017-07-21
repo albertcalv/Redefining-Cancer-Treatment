@@ -68,7 +68,7 @@ corpus = set()
 for i in range(0,9):
     #words = sorted(dict_words[i].items(), key=operator.itemgetter(1), reverse=True)
     for word in dict_words[i]:        
-        print(word)
+        #print(word)
         corpus.add(word)
 
 #Build trainX
@@ -79,7 +79,11 @@ for index, row in training_df.iterrows():
     class_example = row['Class']
 
     ### Tokenize and remove stopwords 
-    text_example_tokenize = nltk.word_tokenize(text_example)
+    #text_example_tokenize = nltk.word_tokenize(text_example)
+    if platform.system() == 'Windows':
+        text_example_tokenize = nltk.word_tokenize(text_example.decode('utf-8'))
+    else:
+        text_example_tokenize = nltk.word_tokenize(text_example)
     test = [i.lower() for i in text_example_tokenize if i.lower() not in stop and i not in punctuations and i.isdigit() is False]
     c = Counter(test)
     
@@ -96,7 +100,11 @@ for index, row in test_df.iterrows():
     text_example = row['Text']
 
     ### Tokenize and remove stopwords 
-    text_example_tokenize = nltk.word_tokenize(text_example)
+    #text_example_tokenize = nltk.word_tokenize(text_example)
+    if platform.system() == 'Windows':
+        text_example_tokenize = nltk.word_tokenize(text_example.decode('utf-8'))
+    else:
+        text_example_tokenize = nltk.word_tokenize(text_example)
     test = [i.lower() for i in text_example_tokenize if i.lower() not in stop and i not in punctuations and i.isdigit() is False]
     c = Counter(test)
     
