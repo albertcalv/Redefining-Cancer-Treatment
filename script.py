@@ -57,7 +57,7 @@ for index, row in training_df.iterrows():
     c = Counter(test)
     
     ### Add to dict    
-    for word_occ in c.most_common(15): 
+    for word_occ in c.most_common(50): 
         if word_occ[0] not in dict_words[class_example-1]:
             dict_words[class_example-1][word_occ[0]] = word_occ[1]
         else:
@@ -89,7 +89,7 @@ for index, row in training_df.iterrows():
     c = Counter(test)
     
     ### Add to dict    
-    for word in c.most_common(15):  
+    for word in c.most_common(50):  
         trainX.iloc[index][word[0]] = word[1]
     print ("Working wih observation: ", index)
 
@@ -111,7 +111,7 @@ for index, row in test_df.iterrows():
     c = Counter(test)
     
     ### Add to dict    
-    for word in c.most_common(15):  
+    for word in c.most_common(50):  
         testX.iloc[index][word[0]] = word[1]
     print ("Working wih observation 2: ", index)
 
@@ -123,7 +123,7 @@ trainY = training_df['Class']
 ## Encode Labels and Add to testX and trainY : Gene & Variation
 le = preprocessing.LabelEncoder()
 le.fit(training_df['Gene'])
-trainX['Gene'] = le.transfo2rm(training_df['Gene'])
+trainX['Gene'] = le.transform(training_df['Gene'])
 le.fit(training_df['Variation'])
 trainX['Variation'] =le.transform(training_df['Variation'])
 le.fit(test_df['Gene'])
