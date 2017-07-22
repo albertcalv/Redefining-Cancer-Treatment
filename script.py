@@ -1,7 +1,7 @@
 ################################ 
 #                              #
 #    @_PUCHA_LEARNING_@        #
-#                              #
+#        1.17285               #
 ################################ 
 from time import gmtime, strftime
 from collections import Counter
@@ -18,7 +18,7 @@ import string
 import socket
 import pickle
 import operator
-#import sys
+
 
 # Set Path to dataset folder 
 path_to_data = "dataset/"
