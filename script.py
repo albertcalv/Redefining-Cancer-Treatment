@@ -132,8 +132,8 @@ le.fit(test_df['Variation'])
 testX['Variation'] = le.transform(test_df['Variation'])     
      
 #model = GradientBoostingClassifier(n_estimators=1000, learning_rate=1.0, max_depth=3)
-#print "xgboost!"
-model = xgb.XGBClassifier()
+print "xgboost! 500 it"
+model = xgb.XGBClassifier(n_estimators=500)
 model.fit(trainX,trainY)
 output = model.predict_proba(testX)
 
