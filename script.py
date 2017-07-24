@@ -1,8 +1,9 @@
 ################################ 
 #                              #
 #    @_PUCHA_LEARNING_@        #
-#        1.17285               #
+#        1.09641               #
 ################################ 
+
 from time import gmtime, strftime
 from collections import Counter
 from nltk.corpus import stopwords
@@ -10,6 +11,7 @@ from nltk import word_tokenize
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn import preprocessing
 import xgboost as xgb
+#from catboost import CatBoostClassifier
 
 import pandas as pd
 import numpy as np 
@@ -49,7 +51,7 @@ for index, row in training_df.iterrows():
     ### Tokenize and remove stopwords 
    
     #if platform.system() == 'Windows':
-    text_example_tokenize = nltk.word_tokenize(text_example.decode('utf-8'))
+    text_example_tokenize = nltk.word_tokenize(text_example)#.decode('utf-8'))
     #else:
     #text_example_tokenize = nltk.word_tokenize(text_example)
 
@@ -82,7 +84,7 @@ for index, row in training_df.iterrows():
 
     ### Tokenize and remove stopwords 
     #if platform.system() == 'Windows':
-    text_example_tokenize = nltk.word_tokenize(text_example.decode('utf-8'))
+    text_example_tokenize = nltk.word_tokenize(text_example)
     #else:
     #text_example_tokenize = nltk.word_tokenize(text_example)
     test = [i.lower() for i in text_example_tokenize if i.lower() not in stop and i not in punctuations and i.isdigit() is False]
@@ -104,7 +106,7 @@ for index, row in test_df.iterrows():
     ### Tokenize and remove stopwords 
     #text_example_tokenize = nltk.word_tokenize(text_example)
     #if platform.system() == 'Windows':
-    text_example_tokenize = nltk.word_tokenize(text_example.decode('utf-8'))
+    text_example_tokenize = nltk.word_tokenize(text_example)
     #else:
     #text_example_tokenize = nltk.word_tokenize(text_example)
     test = [i.lower() for i in text_example_tokenize if i.lower() not in stop and i not in punctuations and i.isdigit() is False]
@@ -132,10 +134,15 @@ le.fit(test_df['Variation'])
 testX['Variation'] = le.transform(test_df['Variation'])     
      
 #model = GradientBoostingClassifier(n_estimators=1000, learning_rate=1.0, max_depth=3)
+
 print "xgboost! 500 it"
 model = xgb.XGBClassifier(n_estimators=500)
+
+#print "catboost!"
+#model = CatBoostClassifier(iterations=500, learning_rate=0.3, depth=3, loss_function='Logloss')
 model.fit(trainX,trainY)
 output = model.predict_proba(testX)
+
 
 #Generate submission file
 tags = ["class1","class2","class3","class4","class5","class6","class7","class8","class9"]
